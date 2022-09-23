@@ -50,8 +50,9 @@ def parse_prediction(prediction:str)->str :
     return pred_dict.get(prediction, prediction.upper())
 
 st.header("Sentiment Classifier")
+st.subheader('Choose Model')
 model_string = st.radio(
-        "Choose Model", (
+        "", (
             #"RoBERTa-2: Large, more accurate (2 classes)",
             #"RoBERTa-3: Large model, more accurate (3 classes)", 
             "Distilbert: Moderate size, somewhat lower accuracy (2 classes)",
@@ -60,14 +61,17 @@ model_string = st.radio(
             )
         )
 model_string = model_string.split(':')[0]
-st.write(f'Model Selected: {model_string}')
+#st.write(f'Model Selected: {model_string}')
 
 with st.spinner("Loading Model..."):
     model_path = get_model_path(model_string)
     sent_pipe = get_sentiment_pipeline(
         model_path)
+st.markdown("")
+st.markdown("")
+
 with st.form("text_input_form", clear_on_submit=False):
-    text_input = st.text_area("Enter Input Text:")
+    text_input = st.text_area("Enter Input Text:", )
     run_click = st.form_submit_button('RUN MODEL')
 if run_click:
     prediction = sent_pipe(text_input)
