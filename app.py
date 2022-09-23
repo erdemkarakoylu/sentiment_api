@@ -50,23 +50,17 @@ def parse_prediction(prediction:str)->str :
     return pred_dict.get(prediction, prediction.upper())
 
 st.header("Sentiment Classifier")
-#left_col, right_col = st.columns(2)
-#with left_col:
 model_string = st.radio(
         "Choose Model", (
-            #"BERT: Bigger, more accurate (2 classes)",
             #"RoBERTa-2: Large, more accurate (2 classes)",
             #"RoBERTa-3: Large model, more accurate (3 classes)", 
+            "Distilbert: Moderate size, somewhat lower accuracy (2 classes)",
             "FNet: Lighter, slightly less accurate (2 classes)", 
             #"Bertweet: Tweet-specific (3 classes)"
             )
         )
 model_string = model_string.split(':')[0]
 st.write(f'Model Selected: {model_string}')
-   
-#with right_col:
-#    num_labels = st.radio('Choose Number of Sentiment Classes', 
-#d    (2, 3))
 
 with st.spinner("Loading Model..."):
     model_path = get_model_path(model_string)
