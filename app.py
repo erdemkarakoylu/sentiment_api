@@ -13,28 +13,17 @@ from transformers.pipelines import pipeline
 
 
 st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
-def get_sentiment_pipeline(
-    model_name#, num_labels
-    ):
-    #config = AutoConfig.from_pretrained(
-    #    model_name, num_labels=num_labels)
+def get_sentiment_pipeline(model_name):
+    """Build sentiment analysis pipeline based on model name."""
     
-    #if num_labels ==2:
-    #    config.id2label = {0:'NEGATIVE', 1: 'POSITIVE'}
-    #elif num_labels == 3:
-    #    config.id2label = {0:'NEGATIVE', 1: 'NEUTRAL', 2: 'POSITIVE'}
-
-    tokenizer = AutoTokenizer.from_pretrained(
-        model_name#, config=config
-        )
-    model = AutoModelForSequenceClassification.from_pretrained(
-        model_name#, config=config
-        )
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForSequenceClassification.from_pretrained(model_name)
     sent_pipeline = pipeline(
         'text-classification', model=model, tokenizer=tokenizer)
     return sent_pipeline
 
 def get_model_path(model_selection):
+    """Map model selection to model path."""
     model_dict ={
         'roberta-2': 'philschmid/roberta-large-sst2', 
         'distilbert': 'bhadresh-savani/distilbert-base-uncased-sentiment-sst2',
@@ -45,6 +34,7 @@ def get_model_path(model_selection):
     return model_dict[model_selection.lower()]
 
 def parse_prediction(prediction:str)->str :
+    """Normalize three-letter labels some models put out."""
     pred_dict = dict(
         NEU='NEUTRAL', POS='POSITIVE', NEG='NEGATIVE')
     return pred_dict.get(prediction, prediction.upper())
