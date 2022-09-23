@@ -19,7 +19,7 @@ def get_sentiment_pipeline(model_name):
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForSequenceClassification.from_pretrained(model_name)
     sent_pipeline = pipeline(
-        'text-classification', model=model, tokenizer=tokenizer)
+        'sentiment-analysis', model=model, tokenizer=tokenizer)
     return sent_pipeline
 
 def get_model_path(model_selection):
