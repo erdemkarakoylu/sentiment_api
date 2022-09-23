@@ -36,7 +36,7 @@ def get_sentiment_pipeline(
 
 def get_model_path(model_selection):
     model_dict ={
-        #'roberta-2': 'philschmid/roberta-large-sst2', 
+        'roberta-2': 'philschmid/roberta-large-sst2', 
         'distilbert': 'bhadresh-savani/distilbert-base-uncased-sentiment-sst2',
         #'robeta-3': 'j-hartmann/sentiment-roberta-large-english-3-classes',
         'fnet': 'gchhablani/fnet-base-finetuned-sst2',
@@ -53,7 +53,8 @@ st.header("Sentiment Classifier")
 st.subheader('Choose Model')
 model_string = st.radio(
         "", (
-            #"RoBERTa-2: Large, more accurate (2 classes)",
+            
+            "RoBERTa-2: Large, more accurate (2 classes)",
             #"RoBERTa-3: Large model, more accurate (3 classes)", 
             "Distilbert: Moderate size, somewhat lower accuracy (2 classes)",
             "FNet: Lighter, slightly less accurate (2 classes)", 
