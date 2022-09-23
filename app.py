@@ -12,7 +12,7 @@ from transformers.pipelines import pipeline
 #TODO 5: Add model footprint information
 
 
-@st.cache(allow_output_mutation=True, show_spinner=False)
+st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
 def get_sentiment_pipeline(
     model_name#, num_labels
     ):
@@ -68,6 +68,9 @@ with st.spinner("Loading Model..."):
     model_path = get_model_path(model_string)
     sent_pipe = get_sentiment_pipeline(
         model_path)
-text_input = st.text_input("Enter Input Text:")
-prediction = sent_pipe(text_input)
-st.write(prediction[0]['label'])
+with st.form("text_input_form", clear_on_submit=False):
+    text_input = st.text_input("Enter Input Text:")
+    run_click = st.form_submit_button('RUN MODEL')
+if run_click:
+    prediction = sent_pipe(text_input)
+    st.write(prediction[0]['label'])
