@@ -31,16 +31,16 @@ def get_sentiment_pipeline(
         model_name#, config=config
         )
     sent_pipeline = pipeline(
-        'text-classification', model=model_name, tokenizer=tokenizer)
+        'text-classification', model=model, tokenizer=tokenizer)
     return sent_pipeline
 
 def get_model_path(model_selection):
     model_dict ={
-        'roberta-2': 'philschmid/roberta-large-sst2', 
+        #'roberta-2': 'philschmid/roberta-large-sst2', 
         #'distilbert'='bhadresh-savani/distilbert-base-uncased-sentiment-sst2'
-        'robeta-3': 'j-hartmann/sentiment-roberta-large-english-3-classes',
+        #'robeta-3': 'j-hartmann/sentiment-roberta-large-english-3-classes',
         'fnet': 'gchhablani/fnet-base-finetuned-sst2',
-        'bertweet': 'finiteautomata/bertweet-base-sentiment-analysis'
+        #'bertweet': 'finiteautomata/bertweet-base-sentiment-analysis'
         }
     return model_dict[model_selection.lower()]
 
@@ -51,10 +51,11 @@ st.header("Sentiment Classifier")
 model_string = st.radio(
         "Choose Model", (
             #"BERT: Bigger, more accurate (2 classes)",
-            "RoBERTa-2: Large, more accurate (2 classes)",
-            "RoBERTa-3: Large model, more accurate (3 classes)", 
+            #"RoBERTa-2: Large, more accurate (2 classes)",
+            #"RoBERTa-3: Large model, more accurate (3 classes)", 
             "FNet: Lighter, slightly less accurate (2 classes)", 
-            "Bertweet: Tweet-specific (3 classes)")
+            #"Bertweet: Tweet-specific (3 classes)"
+            )
         )
 model_string = model_string.split(':')[0]
 st.write(f'Model Selected: {model_string}')
