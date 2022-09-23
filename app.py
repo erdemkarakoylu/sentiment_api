@@ -13,38 +13,28 @@ from transformers.pipelines import pipeline
 
 
 st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
-def get_sentiment_pipeline(
-    model_name#, num_labels
-    ):
-    #config = AutoConfig.from_pretrained(
-    #    model_name, num_labels=num_labels)
-    
-    #if num_labels ==2:
-    #    config.id2label = {0:'NEGATIVE', 1: 'POSITIVE'}
-    #elif num_labels == 3:
-    #    config.id2label = {0:'NEGATIVE', 1: 'NEUTRAL', 2: 'POSITIVE'}
+def get_sentiment_pipeline(model_name):
+    """Build sentiment analysis pipeline based on model name."""
 
-    tokenizer = AutoTokenizer.from_pretrained(
-        model_name#, config=config
-        )
-    model = AutoModelForSequenceClassification.from_pretrained(
-        model_name#, config=config
-        )
+    tokenizer = AutoTokenizer.from_pretrained(model_name)
+    model = AutoModelForSequenceClassification.from_pretrained(model_name)
     sent_pipeline = pipeline(
-        'text-classification', model=model, tokenizer=tokenizer)
+        'sentiment-analysis', model=model, tokenizer=tokenizer)
     return sent_pipeline
 
 def get_model_path(model_selection):
+    """Map model selection to model path."""
     model_dict ={
-        #'roberta-2': 'philschmid/roberta-large-sst2', 
+        'roberta-2': 'philschmid/roberta-large-sst2', 
         'distilbert': 'bhadresh-savani/distilbert-base-uncased-sentiment-sst2',
-        #'robeta-3': 'j-hartmann/sentiment-roberta-large-english-3-classes',
+        'roberta-3': 'j-hartmann/sentiment-roberta-large-english-3-classes',
         'fnet': 'gchhablani/fnet-base-finetuned-sst2',
         'bertweet': 'finiteautomata/bertweet-base-sentiment-analysis'
         }
     return model_dict[model_selection.lower()]
 
 def parse_prediction(prediction:str)->str :
+    """Normalize three-letter labels some models put out."""
     pred_dict = dict(
         NEU='NEUTRAL', POS='POSITIVE', NEG='NEGATIVE')
     return pred_dict.get(prediction, prediction.upper())
@@ -53,8 +43,9 @@ st.header("Sentiment Classifier")
 st.subheader('Choose Model')
 model_string = st.radio(
         "", (
-            #"RoBERTa-2: Large, more accurate (2 classes)",
-            #"RoBERTa-3: Large model, more accurate (3 classes)", 
+
+            "RoBERTa-2: Large, more accurate (2 classes)",
+            "RoBERTa-3: Large model, more accurate (3 classes)", 
             "Distilbert: Moderate size, somewhat lower accuracy (2 classes)",
             "FNet: Lighter, slightly less accurate (2 classes)", 
             "Bertweet: Tweet-specific (3 classes)"
