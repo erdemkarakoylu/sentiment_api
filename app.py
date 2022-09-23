@@ -3,11 +3,15 @@ import streamlit as st
 
 from transformers import AutoConfig, AutoTokenizer, AutoModelForSequenceClassification
 from transformers.pipelines import pipeline
+
+
 #TODO 1: find 3 models for sst2
 #TODO 2: find 3 models for sst3(?)
 #TODO 3: Test models
 #TODO 4: Add interpretability
 #TODO 5: Add model footprint information
+
+
 @st.cache(allow_output_mutation=True, show_spinner=False)
 def get_sentiment_pipeline(
     model_name#, num_labels
@@ -38,7 +42,7 @@ def get_model_path(model_selection):
         'fnet': 'gchhablani/fnet-base-finetuned-sst2',
         'bertweet': 'finiteautomata/bertweet-base-sentiment-analysis'
         }
-    return model_dict[model_selection.lower]
+    return model_dict[model_selection.lower()]
 
 
 st.header("Sentiment Classifier")
