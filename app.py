@@ -37,7 +37,7 @@ def get_sentiment_pipeline(
 def get_model_path(model_selection):
     model_dict ={
         #'roberta-2': 'philschmid/roberta-large-sst2', 
-        #'distilbert'='bhadresh-savani/distilbert-base-uncased-sentiment-sst2'
+        'distilbert': 'bhadresh-savani/distilbert-base-uncased-sentiment-sst2',
         #'robeta-3': 'j-hartmann/sentiment-roberta-large-english-3-classes',
         'fnet': 'gchhablani/fnet-base-finetuned-sst2',
         #'bertweet': 'finiteautomata/bertweet-base-sentiment-analysis'
