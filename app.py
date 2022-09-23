@@ -44,6 +44,10 @@ def get_model_path(model_selection):
         }
     return model_dict[model_selection.lower()]
 
+def parse_prediction(prediction:str)->str :
+    pred_dict = dict(
+        NEU='NEUTRAL', POS='POSITIVE', NEG='NEGATIVE')
+    return pred_dict.get(prediction, prediction.upper())
 
 st.header("Sentiment Classifier")
 #left_col, right_col = st.columns(2)
