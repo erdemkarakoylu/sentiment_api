@@ -71,4 +71,5 @@ with st.form("text_input_form", clear_on_submit=False):
     run_click = st.form_submit_button('RUN MODEL')
 if run_click:
     prediction = sent_pipe(text_input)
-    st.write(prediction[0]['label'])
+    prediction_label = parse_prediction(prediction[0]['label'])
+    st.write(prediction_label)
