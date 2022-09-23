@@ -67,7 +67,7 @@ with st.spinner("Loading Model..."):
     sent_pipe = get_sentiment_pipeline(
         model_path)
 with st.form("text_input_form", clear_on_submit=False):
-    text_input = st.text_input("Enter Input Text:")
+    text_input = st.text_area("Enter Input Text:")
     run_click = st.form_submit_button('RUN MODEL')
 if run_click:
     prediction = sent_pipe(text_input)
