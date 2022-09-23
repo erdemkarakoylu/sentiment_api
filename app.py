@@ -40,7 +40,7 @@ def get_model_path(model_selection):
         'distilbert': 'bhadresh-savani/distilbert-base-uncased-sentiment-sst2',
         #'robeta-3': 'j-hartmann/sentiment-roberta-large-english-3-classes',
         'fnet': 'gchhablani/fnet-base-finetuned-sst2',
-        #'bertweet': 'finiteautomata/bertweet-base-sentiment-analysis'
+        'bertweet': 'finiteautomata/bertweet-base-sentiment-analysis'
         }
     return model_dict[model_selection.lower()]
 
@@ -56,7 +56,7 @@ model_string = st.radio(
             #"RoBERTa-3: Large model, more accurate (3 classes)", 
             "Distilbert: Moderate size, somewhat lower accuracy (2 classes)",
             "FNet: Lighter, slightly less accurate (2 classes)", 
-            #"Bertweet: Tweet-specific (3 classes)"
+            "Bertweet: Tweet-specific (3 classes)"
             )
         )
 model_string = model_string.split(':')[0]
