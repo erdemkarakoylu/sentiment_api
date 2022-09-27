@@ -12,7 +12,7 @@ from transformers.pipelines import pipeline
 #TODO 5: Add model footprint information
 
 
-st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
+@st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
 def get_sentiment_pipeline(model_name):
     """Build sentiment analysis pipeline based on model name."""
 
