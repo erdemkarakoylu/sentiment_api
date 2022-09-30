@@ -1,7 +1,8 @@
 from annotated_text import annotated_text
 import streamlit as st
 
-from transformers import AutoConfig, AutoTokenizer, AutoModelForSequenceClassification
+import torch
+from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from transformers.pipelines import pipeline
 
 
@@ -15,11 +16,14 @@ from transformers.pipelines import pipeline
 @st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
 def get_sentiment_pipeline(model_name):
     """Build sentiment analysis pipeline based on model name."""
-
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
-    model = AutoModelForSequenceClassification.from_pretrained(model_name)
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    tokenizer_path = f'/app/models/tokenizer/{model_name}'
+    classifier_path = f'/app/models/classifier/{model_name}'
+    tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
+    model = AutoModelForSequenceClassification.from_pretrained(
+        classifier_path).to(device)
     sent_pipeline = pipeline(
-        'sentiment-analysis', model=model, tokenizer=tokenizer)
+        'sentiment-analysis', model=model, tokenizer=tokenizer, device=device)
     return sent_pipeline
 
 def get_model_path(model_selection):
@@ -60,6 +64,8 @@ with st.spinner("Loading Model..."):
         model_path)
 st.markdown("")
 st.markdown("")
+
+st.write(f"Model loaded on {sent_pipe.model.device}")
 
 with st.form("text_input_form", clear_on_submit=False):
     text_input = st.text_area("Enter Input Text:", )
