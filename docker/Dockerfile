@@ -13,7 +13,7 @@ RUN apt-get -y install python3-pip
 WORKDIR /app
 # install pytorch with support for a specific CUDA version
 RUN pip3 install torch torchvision torchaudio --extra-index-url https://download.pytorch.org/whl/cu116
-COPY requirement.txt .
+COPY requirements.txt .
 RUN pip3 install --no-cache-dir -r requirements.txt
 ENV LC_ALL=C.UTF-8
 ENV LANG=C.UTF-8
