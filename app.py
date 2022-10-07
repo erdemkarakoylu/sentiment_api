@@ -4,6 +4,7 @@ import streamlit as st
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from transformers.pipelines import pipeline
+from transformers_interpret import SequenceClassificationExplainer as SCE
 
 
 #TODO 1: find 3 models for sst2
