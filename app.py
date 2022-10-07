@@ -28,13 +28,7 @@ def get_sentiment_pipeline(model_name):
 
 def get_model_path(model_selection):
     """Map model selection to model path."""
-    """model_dict ={
-        'roberta-2': 'philschmid/roberta-large-sst2', 
-        'distilbert': 'bhadresh-savani/distilbert-base-uncased-sentiment-sst2',
-        'roberta-3': 'j-hartmann/sentiment-roberta-large-english-3-classes',
-        'fnet': 'gchhablani/fnet-base-finetuned-sst2',
-        'bertweet': 'finiteautomata/bertweet-base-sentiment-analysis'
-        }"""
+
     model_dict = {
         'roberta-2': 'roberta-large-sst2', 
         'distilbert': 'distilbert-base-uncased-sentiment-sst2',
