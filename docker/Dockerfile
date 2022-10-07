@@ -27,5 +27,7 @@ RUN python3 stash_big_models.py
 # === PRODUCTION Stage ===
 FROM build AS production
 COPY app.py /app/
-
+EXPOSE 8501
+ENTRYPOINT [ "streamlit", "run" ]
+CMD ["app.py"]
 
