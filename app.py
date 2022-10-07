@@ -7,6 +7,7 @@ from transformers.pipelines import pipeline
 from transformers_interpret import SequenceClassificationExplainer as SCE
 
 
+
 #TODO 1: find 3 models for sst2
 #TODO 2: find 3 models for sst3(?)
 #TODO 3: Test models
@@ -46,8 +47,8 @@ def parse_prediction(prediction:str)->str :
     return pred_dict.get(prediction, prediction.upper())
 
 st.header("Sentiment Classifier")
-st.subheader('Choose Model')
-model_string = st.radio(
+st.sidebar.subheader('Choose Model')
+model_string = st.sidebar.radio(
         "", (
 
             "RoBERTa-2: Large, more accurate (2 classes)",
