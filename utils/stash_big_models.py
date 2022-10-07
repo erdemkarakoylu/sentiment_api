@@ -3,12 +3,12 @@ from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 """This script downloads and saves all models offered as options in the app"""
 
-def load_and_save_model(model_path):
-    model_name = model_path.split('/')[-1]
-    tokenizer = AutoTokenizer.from_pretrained(model_path)
-    model = AutoModelForSequenceClassification.from_pretrained(model_name)
-    tokenizer.save_pretrained(f'models/tokenizer/{model_name}')
-    model.save_pretrained(f'models/classifier/{model_name}')
+def load_and_save_model(model_hub_path):
+    model_name = model_hub_path.split('/')[-1]
+    tokenizer = AutoTokenizer.from_pretrained(model_hub_path)
+    clf = AutoModelForSequenceClassification.from_pretrained(model_hub_path)
+    tokenizer.save_pretrained(f'/app/models/tokenizer/{model_name}')
+    clf.save_pretrained(f'/app/models/classifier/{model_name}')
 
 models = [
     'philschmid/roberta-large-sst2', 
