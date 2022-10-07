@@ -1,2 +1,3 @@
 notebooks/
 docker/Dockertest
+*.pyc
