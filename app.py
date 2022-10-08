@@ -1,5 +1,6 @@
 from annotated_text import annotated_text
 import streamlit as st
+from streamlit import components
 
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
@@ -63,8 +64,7 @@ model_string = model_string.split(':')[0]
 
 with st.spinner("Loading Model..."):
     model_path = get_model_path(model_string)
-    sent_pipe = get_sentiment_pipeline(
-        model_path)
+    sent_pipe = get_sentiment_pipeline(model_path)
 
 st.markdown("")
 st.markdown("")
@@ -73,8 +73,53 @@ st.write(f"Model loaded on {sent_pipe.model.device}")
 
 with st.form("text_input_form", clear_on_submit=False):
     text_input = st.text_area("Enter Input Text:", )
-    run_click = st.form_submit_button('RUN MODEL')
+    run_click = st.form_submit_button('CLASSIFY INPUT')
 if run_click:
     prediction = sent_pipe(text_input)
     prediction_label = parse_prediction(prediction[0]['label'])
     st.write(prediction_label)
+
+st.markdown("---")
+st.markdown("---")
+# ---- Prediction Interpreter ----- #
+st.subheader("Prediction Interpretation")
+cls_explainer = SCE(model=sent_pipe.model, tokenizer=sent_pipe.tokenizer)
+if cls_explainer.accepts_position_ids:
+    emb_type_name = st.sidebar.selectbox(
+        "Choose embedding type for attribution.", ["word", "position"]
+    )
+    if emb_type_name == "word":
+        emb_type_num = 0
+    if emb_type_name == "position":
+        emb_type_num = 1
+else:
+    emb_type_num = 0
+explanation_classes = ["predicted"] + list(
+    sent_pipe.model.config.label2id.keys())
+explanation_class_choice = st.sidebar.selectbox(
+    "Explanation class: The class you would like to explain output with respect to.",
+    explanation_classes
+    )
+if st.button("Interpret Prediction"):
+    with st.spinner("Interpreting your text (This may take some time)"):
+        if explanation_class_choice != "predicted":
+            word_attributions = cls_explainer(
+                text_input,
+                class_name=explanation_class_choice,
+                embedding_type=emb_type_num,
+                internal_batch_size=2,
+            )
+        else:
+            word_attributions = cls_explainer(
+                text_input, embedding_type=emb_type_num, internal_batch_size=2
+                )
+
+    if word_attributions:
+        word_attributions_expander = st.beta_expander(
+            "Click here for raw word attributions"
+        )
+        with word_attributions_expander:
+            st.json(word_attributions)
+        components.v1.html(
+            cls_explainer.visualize()._repr_html_(), scrolling=True, height=350
+        )
