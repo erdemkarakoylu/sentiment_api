@@ -100,7 +100,7 @@ explanation_class_choice = st.sidebar.selectbox(
     "Explanation class: The class you would like to explain output with respect to.",
     explanation_classes
     )
-if st.button("Interpret Prediction"):
+if st.button("INTERPRET PREDICTION"):
     with st.spinner("Interpreting your text (This may take some time)"):
         if explanation_class_choice != "predicted":
             word_attributions = cls_explainer(
@@ -115,7 +115,7 @@ if st.button("Interpret Prediction"):
                 )
 
     if word_attributions:
-        word_attributions_expander = st.beta_expander(
+        word_attributions_expander = st.expander(
             "Click here for raw word attributions"
         )
         with word_attributions_expander:
