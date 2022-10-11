@@ -70,7 +70,11 @@ with st.spinner("Loading Model..."):
 
 st.markdown("")
 st.markdown("")
+if DEVICE.type == 'cpu':
     st.warning("Running on CPU", icon="⚠️")
+else:
+    st.success("Running on GPU", icon="✅")
+#st.write(f"Model loaded on {sent_pipe.model.device}")
 
 with st.form("text_input_form", clear_on_submit=False):
     text_input = st.text_area("Enter Input Text:", )
