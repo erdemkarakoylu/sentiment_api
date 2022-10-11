@@ -15,16 +15,18 @@ from transformers_interpret import SequenceClassificationExplainer as SCE
 #TODO 4: Add interpretability
 #TODO 5: Add model footprint information
 
+DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
 @st.cache(persist=True, allow_output_mutation=True, show_spinner=False)
 def get_sentiment_pipeline(model_name):
     """Build sentiment analysis pipeline based on model name."""
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    
     tokenizer_path = f'/app/models/tokenizer/{model_name}'
     classifier_path = f'/app/models/classifier/{model_name}'
     tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
     model = AutoModelForSequenceClassification.from_pretrained(
-        classifier_path).to(device)
+        classifier_path).to(DEVICE)
+    device_map = torch.cuda.current_device() if DEVICE.type=='cuda' else 'cpu'
     sent_pipeline = pipeline(
         'sentiment-analysis', model=model, tokenizer=tokenizer, device=device)
     return sent_pipeline
