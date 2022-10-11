@@ -28,7 +28,7 @@ def get_sentiment_pipeline(model_name):
         classifier_path).to(DEVICE)
     device_map = torch.cuda.current_device() if DEVICE.type=='cuda' else 'cpu'
     sent_pipeline = pipeline(
-        'sentiment-analysis', model=model, tokenizer=tokenizer, device=device)
+        'sentiment-analysis', model=model, tokenizer=tokenizer, device=device_map)
     return sent_pipeline
 
 def get_model_path(model_selection):
@@ -125,6 +125,9 @@ if st.button("INTERPRET PREDICTION"):
         )
         with word_attributions_expander:
             st.json(word_attributions)
-        components.v1.html(
-            cls_explainer.visualize()._repr_html_(), scrolling=True, height=350
+    html_component = cls_explainer.visualize()._repr_html_()
+    html_background = "<style>:root {background-color: LightGray;}</style>"
+    components.v1.html(
+        html_background + html_component,
+        scrolling=True, height=350
         )
