@@ -70,8 +70,7 @@ with st.spinner("Loading Model..."):
 
 st.markdown("")
 st.markdown("")
-
-st.write(f"Model loaded on {sent_pipe.model.device}")
+    st.warning("Running on CPU", icon="⚠️")
 
 with st.form("text_input_form", clear_on_submit=False):
     text_input = st.text_area("Enter Input Text:", )
