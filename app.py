@@ -8,12 +8,8 @@ from transformers.pipelines import pipeline
 from transformers_interpret import SequenceClassificationExplainer as SCE
 
 
-
-#TODO 1: find 3 models for sst2
-#TODO 2: find 3 models for sst3(?)
-#TODO 3: Test models
-#TODO 4: Add interpretability
-#TODO 5: Add model footprint information
+#TODO 1: Add model footprint information
+#TODO 2: Capture FNET prediction interpreter error
 
 DEVICE = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
